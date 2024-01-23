@@ -47,7 +47,7 @@ const ModeSelect = (props: {
           </button>
         )}
 
-        {props.modeSelected == "premiere" && (
+        {/* {props.modeSelected == "premiere" && (
           <button
             onClick={() => selectNewMode("premiere")}
             className="bg-blue-500 ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"
@@ -62,9 +62,9 @@ const ModeSelect = (props: {
           >
             <h1 className="pt-1 pb-1 text-black text-xs flex-1 0">Premier</h1>
           </button>
-        )}
+        )} */}
       </div>
-      <div className="flex flex-row mr-2">
+      <div className="flex flex-row mr-2 w-1/3">
         <button
           // onClick={selectNewMode}
           className="bg-slate-300 ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"

@@ -16,7 +16,16 @@ const UserMatches = (props: { matchesData: any }) => {
               agentIcon={match.agentIcon}
               adr={match.totalDamage / match.rounds}
               matchResult={match.matchResult}
+              map={match.map}
               rounds={match.rounds}
+              roundsWon={match.roundWins}
+              roundsLost={match.roundLosses}
+              headshots={match.headshots}
+              bodyshots={match.bodyshots}
+              legshots={match.legshots}
+              mode={match.mode}
+              index={index}
+              data={match.matchData}
             />
           </div>
         ))}

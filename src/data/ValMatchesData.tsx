@@ -16,6 +16,10 @@ function formatMatchData(data, userName, tag) {
     if (match.teams.blue.has_won == false) {
       hasWon = "Red";
     }
+    const map = match.metadata.map;
+    const mode = match.metadata.mode;
+    let roundWins = 0;
+    let roundLosses = 0;
     //console.log(rounds);
     const myPlayer = match.players.all_players.find((player) => {
       const matchAccount =
@@ -28,6 +32,15 @@ function formatMatchData(data, userName, tag) {
       playerWinLose = true;
     } else {
       //console.log(hasWon);
+    }
+    if (myPlayer.team == "Blue") {
+      console.log("Blue ");
+      roundWins = match.teams.blue.rounds_won;
+      roundLosses = match.teams.blue.rounds_lost;
+    } else {
+      console.log("Red ");
+      roundWins = match.teams.red.rounds_won;
+      roundLosses = match.teams.red.rounds_lost;
     }
     // totalKills += myPlayer.stats.kills;
     // totalDeaths += myPlayer.stats.deaths;
@@ -46,6 +59,11 @@ function formatMatchData(data, userName, tag) {
       rounds: rounds,
       teamColor: myPlayer.team,
       matchResult: playerWinLose,
+      map: map,
+      mode: mode,
+      roundWins: roundWins,
+      roundLosses: roundLosses,
+      matchData: data,
       // rounds: myPlayer.rounds.length,
     };
     //console.log(myPlayer);

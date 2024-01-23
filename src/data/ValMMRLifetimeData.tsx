@@ -12,18 +12,21 @@ const formatData = (data) => ({
   prevRankChange: data.mmr_change_to_last_game,
 });
 
-const ValMMRData = ({ region, userName, tag }) => {
+const ValMMRLifetimeData = ({ version, region, userName, tag }) => {
   const VAPI = new HenrikDevValorantAPI();
 
   const fetchData = async () => {
     try {
-      const response = await VAPI.getMMRHistory({
+      const response = await VAPI.getMMR({
+        version: version,
         region: region,
         name: userName,
         tag: tag,
       });
+      console.log("Lifetime mmr");
       console.log(response.data);
-      return formatData(response.data[0]);
+      //return formatData(response.data[0]);
+      return response.data;
     } catch (error) {
       console.error("Error fetching Valorant API:", error);
       return null;
@@ -33,4 +36,4 @@ const ValMMRData = ({ region, userName, tag }) => {
   return fetchData;
 };
 
-export default ValMMRData;
+export default ValMMRLifetimeData;
