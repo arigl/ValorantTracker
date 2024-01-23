@@ -71,6 +71,13 @@ function getRankImage(rank: string) {
     return "unable to fetch";
   }
 }
+
+function formatRankSeason(season: string) {
+  const episodeNumber = season.substring(1, 2);
+  const actNumber = season.substring(3, 4);
+
+  return `Episode ${episodeNumber}: Act ${actNumber}`;
+}
 const UserRankInfo = (props: { mmrData: any; mmrLifeData: any }) => {
   return (
     <div className="flex flex-col flex-1 justify-center items-start ml-5 p-5 bg-slate-200 mt-2 rounded">
@@ -93,7 +100,9 @@ const UserRankInfo = (props: { mmrData: any; mmrLifeData: any }) => {
               <div className="flex flex-col">
                 <h2 className="text-sm">Peak Rank:</h2>
                 <h1>{props.mmrLifeData.highest_rank.patched_tier}</h1>
-                <h1>{props.mmrLifeData.highest_rank.season}</h1>
+                <h1>
+                  {formatRankSeason(props.mmrLifeData.highest_rank.season)}
+                </h1>
               </div>
             </div>
           )}

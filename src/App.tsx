@@ -11,6 +11,7 @@ import UserMatches from "./components/UserMatches";
 import OverviewStats from "./components/OverviewStats";
 import ModeSelect from "./components/ModeSelect";
 import LoginScreen from "./components/LoginScreen";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   const [fetchedUserData, setFetchedUserData] = useState(null);
@@ -23,6 +24,8 @@ function App() {
   const [fetchedMatchesData, setFetchedMatchesData] = useState(null);
   const [modeSelected, selectMode] = useState<string>("competitive");
   const [currentUser, setCurrentUser] = useState("");
+  const [loading, toggleLoading] = useState(true);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     console.log("use effect");
@@ -44,6 +47,8 @@ function App() {
 
   useEffect(() => {
     // Check if currentUser is not an empty string
+    setLoadingProgress(0);
+    toggleLoading(true);
     if (currentUser !== "") {
       // Call handleFetchData when currentUser changes
       handleFetchData();
@@ -84,6 +89,7 @@ function App() {
     const fetchUserData = ValUserData({ userName: user, tag: tag });
     const userData = await fetchUserData();
     setFetchedUserData(userData);
+    setLoadingProgress(20);
 
     const fetchMMRData = ValMMRData({
       region: "NA",
@@ -92,6 +98,7 @@ function App() {
     });
     const mmrData = await fetchMMRData();
     setFetchedMMRData(mmrData);
+    setLoadingProgress(40);
 
     const fetchLifeMMRData = ValMMRLifetimeData({
       version: "v2",
@@ -101,6 +108,7 @@ function App() {
     });
     const mmrLifeData = await fetchLifeMMRData();
     setFetchedLifetimeMMRData(mmrLifeData);
+    setLoadingProgress(60);
 
     const fetchCompetitiveMatchesData = ValMatchesData({
       region: "NA",
@@ -111,6 +119,7 @@ function App() {
     const competitiveData = await fetchCompetitiveMatchesData();
     setFetchedCompetitiveMatchesData(competitiveData);
     setFetchedMatchesData(competitiveData);
+    setLoadingProgress(80);
 
     const fetchUnratedMatchesData = ValMatchesData({
       region: "NA",
@@ -120,6 +129,9 @@ function App() {
     });
     const unratedData = await fetchUnratedMatchesData();
     setFetchedUnratedMatchesData(unratedData);
+    setLoadingProgress(100);
+
+    toggleLoading(false);
     //setFetchedMatchesData(matchesData);
   };
 
@@ -136,49 +148,55 @@ function App() {
           fetchAPIData={handleFetchData}
         />
       )}
-
-      {currentUser != "" && (
-        <div className="flex flex-col">
-          <div className="flex flex-row justify-between bg-slate-300 h-12">
-            <UserProfile userData={fetchedUserData} />
-            <div className="flex flex-row items-center flex-grow text-center">
-              {/* <h1 className="text-xs flex-1">Overview</h1>
+      {currentUser != "" && loading && (
+        <LoadingScreen bgcolor={"#6a1b9a"} completed={loadingProgress} />
+      )}
+      {currentUser != "" &&
+        fetchedUserData &&
+        fetchedLifetimeMMRData &&
+        fetchedMatchesData &&
+        loading == false && (
+          <div className="flex flex-col">
+            <div className="flex flex-row justify-between bg-slate-300 h-12">
+              <UserProfile userData={fetchedUserData} />
+              <div className="flex flex-row items-center flex-grow text-center">
+                {/* <h1 className="text-xs flex-1">Overview</h1>
             <h1 className="text-xs flex-1">Matches</h1>
             <h1 className="text-xs flex-1">Agents</h1>
             <h1 className="text-xs flex-1">Maps</h1>
             <h1 className="text-xs flex-1">Weapons</h1> */}
-            </div>
-
-            <button
-              className="bg-slate-500 text-white text-xs rounded-xl p-1 pl-3 pr-3 mt-2 mb-2 mr-5 text-sm hover:bg-slate-400"
-              onClick={goBackHome}
-            >
-              Home
-            </button>
-          </div>
-          <div className="flex flex-col">
-            <ModeSelect
-              modeSelected={modeSelected}
-              selectMode={handleSelectMode}
-            />
-            <div className="flex flex-row gap-10 items-start">
-              <div className="w-1/5 flex items-start">
-                {modeSelected == "competitive" && (
-                  <UserRankInfo
-                    mmrData={fetchedMMRData}
-                    mmrLifeData={fetchedLifetimeMMRData}
-                  />
-                )}
               </div>
 
-              <div className="flex flex-col gap-3 items-start w-full mr-5">
-                <OverviewStats matchesData={fetchedMatchesData} />
-                <UserMatches matchesData={fetchedMatchesData}></UserMatches>
+              <button
+                className="bg-slate-500 text-white text-xs rounded-xl p-1 pl-3 pr-3 mt-2 mb-2 mr-5 text-sm hover:bg-slate-400"
+                onClick={goBackHome}
+              >
+                Home
+              </button>
+            </div>
+            <div className="flex flex-col">
+              <ModeSelect
+                modeSelected={modeSelected}
+                selectMode={handleSelectMode}
+              />
+              <div className="flex flex-row gap-10 items-start">
+                <div className="w-1/5 flex items-start">
+                  {modeSelected == "competitive" && (
+                    <UserRankInfo
+                      mmrData={fetchedMMRData}
+                      mmrLifeData={fetchedLifetimeMMRData}
+                    />
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-3 items-start w-full mr-5">
+                  <OverviewStats matchesData={fetchedMatchesData} />
+                  <UserMatches matchesData={fetchedMatchesData}></UserMatches>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
     </>
   );
 }
