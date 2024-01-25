@@ -11,7 +11,7 @@ const UserProfile = (props: { userData: any }) => {
               width={30}
             ></img>
             <div>
-              <h1 className="text-black">
+              <h1 className="">
                 {props.userData.name}
                 <span>#{props.userData.tag}</span>
               </h1>

@@ -53,27 +53,30 @@ const OverviewStats = (props: { matchesData: any }) => {
     }
   }, [props.matchesData]);
   return (
-    <div className="bg-slate-200 p-2 w-full mt-2 rounded-l">
-      <h1 className="mt-1 mb-1 font">Overview Stats</h1>
+    <div className="p-2 w-full mt-2 rounded-l border">
+      <h1 className="mt-1 mb-1 font">
+        Overview Stats{" "}
+        <span className="ml-0.5 opacity-75 text-xs">(past 10 games)</span>
+      </h1>
       {props.matchesData && (
         <div className="flex flex-row gap-10">
-          <div className="bg-slate-200 p-3 rounded border border-blue-500 border-opacity-50">
+          <div className="border p-3 rounded border border-blue-500 border-opacity-50">
             <h1>K/D/A</h1>
             <p className="font-bold">{kdRatio.toFixed(2)}</p>
           </div>
-          <div className="bg-slate-200 p-3 rounded border border-blue-500 border-opacity-50">
+          <div className="border p-3 rounded border border-blue-500 border-opacity-50">
             <h1>ADR</h1>
             <p className="font-bold">{damagePerRound.toFixed(2)}</p>
           </div>
-          <div className="bg-slate-200 p-3 rounded border border-blue-500 border-opacity-50">
+          <div className="border p-3 rounded border border-blue-500 border-opacity-50">
             <h1>HS%</h1>
             <p className="font-bold">{headshotPer.toFixed(2)}</p>
           </div>
-          <div className="bg-slate-200 p-3 rounded border border-blue-500 border-opacity-50">
+          <div className="border p-3 rounded border border-blue-500 border-opacity-50">
             <h1>Winrate%</h1>
             <p className="font-bold">{(winRate * 100).toFixed(2)}</p>
           </div>
-          <div className="bg-slate-200 p-3 rounded border border-blue-500 border-opacity-50">
+          <div className="border p-3 rounded border border-blue-500 border-opacity-50">
             <h1>ACS</h1>
             <p className="font-bold">{ACS.toFixed(2)}</p>
           </div>

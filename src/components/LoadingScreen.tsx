@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-const LoadingScreen = ({ bgcolor, completed, progress = 0 }) => {
+interface LoadingScreenProps {
+  bgcolor: string;
+  completed: number;
+}
+
+const LoadingScreen: React.FC<LoadingScreenProps> = ({
+  bgcolor,
+  completed,
+}) => {
   const [progressLabel, setProgressLabel] = useState(
     getProgressLabel(completed)
   );
@@ -10,7 +18,7 @@ const LoadingScreen = ({ bgcolor, completed, progress = 0 }) => {
     setProgressLabel(getProgressLabel(completed));
   }, [completed]);
 
-  const containerStyles = {
+  const containerStyles: React.CSSProperties = {
     height: 20,
     width: "60%",
     backgroundColor: "#e0e0de",
@@ -18,7 +26,7 @@ const LoadingScreen = ({ bgcolor, completed, progress = 0 }) => {
     margin: 50,
   };
 
-  const fillerStyles = {
+  const fillerStyles: React.CSSProperties = {
     height: "100%",
     width: `${completed}%`,
     backgroundColor: bgcolor,
@@ -26,7 +34,7 @@ const LoadingScreen = ({ bgcolor, completed, progress = 0 }) => {
     textAlign: "right" as const,
   };
 
-  const labelStyles = {
+  const labelStyles: React.CSSProperties = {
     padding: 5,
     color: "white",
     fontWeight: "bold",
@@ -44,7 +52,7 @@ const LoadingScreen = ({ bgcolor, completed, progress = 0 }) => {
   );
 };
 
-function getProgressLabel(completed: number) {
+function getProgressLabel(completed: number): string {
   if (completed === 20) {
     return "Retrieving user data...";
   } else if (completed === 40) {
@@ -53,6 +61,8 @@ function getProgressLabel(completed: number) {
     return "Setting up for post plant...";
   } else if (completed === 80) {
     return "Wrapping up final steps...";
+  } else if (completed === 90) {
+    return "Almost done...";
   } else {
     return `Progress: ${completed}%`;
   }

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Separator } from "@/components/ui/separator";
+
 import "../styles.css";
 
 function getRankImage(rank: string) {
@@ -80,22 +82,30 @@ function formatRankSeason(season: string) {
 }
 const UserRankInfo = (props: { mmrData: any; mmrLifeData: any }) => {
   return (
-    <div className="flex flex-col flex-1 justify-center items-start ml-5 p-5 bg-slate-200 mt-2 rounded">
-      <h1>Current Rating</h1>
+    <div className="flex flex-col justify-center ml-5 p-5 pt-2 border mt-2 rounded w-full">
+      <h1 className="text-center mb-2 font-bold">Current Rating:</h1>
+      <Separator className="bg-black opacity-10 mb-3"></Separator>
       {props.mmrData && props.mmrLifeData && (
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-row">
-            <img src={props.mmrData.rankImage} width={30}></img>
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-row gap-2">
+            <img
+              src={props.mmrData.rankImage}
+              width={40}
+              height={40} // Set height to maintain 1x1 aspect ratio
+              style={{ objectFit: "contain" }} // Use object-fit to prevent stretching
+            />
             <div className="flex flex-col">
               <h2 className="text-sm">Current Rank:</h2>
               <h1>{props.mmrData.rankText}</h1>
             </div>
           </div>
           {props.mmrLifeData && (
-            <div className="flex flex-row">
+            <div className="flex flex-row gap-2">
               <img
                 src={getRankImage(props.mmrLifeData.highest_rank.patched_tier)}
-                width={30}
+                width={40}
+                height={40} // Set height to maintain 1x1 aspect ratio
+                style={{ objectFit: "contain" }} // Use object-fit to prevent stretching
               ></img>
               <div className="flex flex-col">
                 <h2 className="text-sm">Peak Rank:</h2>

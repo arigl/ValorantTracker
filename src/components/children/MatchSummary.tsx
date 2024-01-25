@@ -26,10 +26,21 @@ const MatchSummary = (props) => {
           <h1 className="font-xs">{props.mode}</h1>
           <h1 className="font-bold">{props.map}</h1>
         </div>
-        <div className="flex flex-row items-center">
-          <h1 className="text-green-500">{props.roundsWon}</h1>
-          <h1> : </h1>
-          <h1 className="text-red-500">{props.roundsLost}</h1>
+        <div className="flex items-center">
+          {props.roundsWon >= props.roundsLost && (
+            <div className="flex flex-row items-center border gap-1 p-2 rounded-lg">
+              <h1 className="text-green-500">{props.roundsWon}</h1>
+              <h1> : </h1>
+              <h1 className="text-red-500">{props.roundsLost}</h1>
+            </div>
+          )}
+          {props.roundsWon < props.roundsLost && (
+            <div className="flex flex-row items-center border gap-1 p-2 rounded-lg">
+              <h1 className="text-red-500">{props.roundsWon}</h1>
+              <h1> : </h1>
+              <h1 className="text-green-500">{props.roundsLost}</h1>
+            </div>
+          )}
         </div>
         <div className="flex flex-col font-bold">
           <h1 className="font-normal">K / D / A</h1>
@@ -72,7 +83,9 @@ const MatchSummary = (props) => {
         </div>
       </div>
       <Drawer>
-        <DrawerTrigger>View Match</DrawerTrigger>
+        <DrawerTrigger className="border p-3 rounded-lg hover:bg-slate-200">
+          View Match
+        </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
             {/* <DrawerTitle>Are you absolutely sure?</DrawerTitle>

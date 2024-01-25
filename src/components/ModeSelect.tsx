@@ -7,7 +7,7 @@ const ModeSelect = (props: {
   };
 
   return (
-    <div className="flex flex-row gap-10 bg-slate-200 ml-5 mr-5 mt-2 rounded justify-between">
+    <div className="flex flex-row gap-10 border ml-5 mr-5 mt-2 rounded justify-between">
       <div className="flex flex-row gap-10 w-2/3">
         {props.modeSelected == "competitive" && (
           <button
@@ -22,11 +22,9 @@ const ModeSelect = (props: {
         {props.modeSelected != "competitive" && (
           <button
             onClick={() => selectNewMode("competitive")}
-            className="bg-slate-300 ml-2 mt-2 mb-2 rounded-lg flex-1"
+            className="ml-2 mt-2 mb-2 border rounded-lg flex-1"
           >
-            <h1 className="pt-1 pb-1 text-black text-xs flex-1 0">
-              Competitive
-            </h1>
+            <h1 className="pt-1 pb-1 text-xs flex-1 0">Competitive</h1>
           </button>
         )}
 
@@ -41,9 +39,9 @@ const ModeSelect = (props: {
         {props.modeSelected != "unrated" && (
           <button
             onClick={() => selectNewMode("unrated")}
-            className="bg-slate-300 ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"
+            className="ml-2 mt-2 mb-2 rounded-lg flex-1 border hover:bg-slate-400"
           >
-            <h1 className="pt-1 pb-1 text-black text-xs flex-1 0">Unrated</h1>
+            <h1 className="pt-1 pb-1 text-xs flex-1 0">Unrated</h1>
           </button>
         )}
 
@@ -67,27 +65,21 @@ const ModeSelect = (props: {
       <div className="flex flex-row mr-2 w-1/3">
         <button
           // onClick={selectNewMode}
-          className="bg-slate-300 ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"
+          className="border ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"
         >
-          <h1 className="pt-1 pb-1 pl-3 pr-3 text-black text-xs flex-1 0">
-            ALL
-          </h1>
+          <h1 className="pt-1 pb-1 pl-3 pr-3 text-xs flex-1 0">ALL</h1>
         </button>
         <button
           // onClick={selectNewMode}
-          className="bg-slate-300 ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"
+          className="border ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"
         >
-          <h1 className="pt-1 pb-1 pl-3 pr-3 text-black text-xs flex-1 0">
-            E8:A1
-          </h1>
+          <h1 className="pt-1 pb-1 pl-3 pr-3 text-xs flex-1 0">E8:A1</h1>
         </button>
         <button
           // onClick={selectNewMode}
-          className="bg-slate-300 ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"
+          className="border ml-2 mt-2 mb-2 rounded-lg flex-1 hover:bg-slate-400"
         >
-          <h1 className="pt-1 pb-1 pl-3 pr-3 text-black text-xs flex-1 0">
-            ...
-          </h1>
+          <h1 className="pt-1 pb-1 pl-3 pr-3 text-xs flex-1 0">...</h1>
         </button>
       </div>
     </div>

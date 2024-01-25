@@ -73,7 +73,7 @@ function formatMatchData(data, userName, tag) {
 
 const ValMatchesData = ({ region, userName, tag, modeFilter }) => {
   const VAPI = new HenrikDevValorantAPI();
-  console.log(modeFilter);
+  // console.log(modeFilter);
   const fetchData = async () => {
     try {
       const response = await VAPI.getMatches({
@@ -83,7 +83,7 @@ const ValMatchesData = ({ region, userName, tag, modeFilter }) => {
         filter: modeFilter,
         size: 10,
       });
-      console.log(response.data);
+      // console.log(response.data);
       //formatMatchData(response.data, userName, tag);
       return formatMatchData(response.data, userName, tag);
     } catch (error) {
