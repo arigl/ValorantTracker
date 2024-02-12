@@ -1,18 +1,18 @@
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
+// import {
+//   Drawer,
+//   DrawerClose,
+//   DrawerContent,
+//   DrawerDescription,
+//   DrawerFooter,
+//   DrawerHeader,
+//   DrawerTitle,
+//   DrawerTrigger,
+// } from "@/components/ui/drawer";
 
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 
 import {
-  ColumnDef,
+  // ColumnDef,
   createColumnHelper,
   flexRender,
   getCoreRowModel,
@@ -26,21 +26,117 @@ import React from "react";
 import "./table.css";
 type Player = {
   name: string;
-  acs: number;
+  acs: string;
   kills: number;
   deaths: number;
   assists: number;
-  kd: number;
-  adr: number;
-  hs: number;
+  kd: string;
+  adr: string;
+  hs: string;
   // fk: number;
   // fd: number;
 };
 
-function formatPlayerData(data, rounds: number) {
+// interface MatchData {
+//   players: {
+//     all_players: {
+//       stats: {
+//         kills: number;
+//         deaths: number;
+//         assists: number;
+//         score: number;
+//         headshots: number;
+//         bodyshots: number;
+//         legshots: number;
+//       };
+//       assets: {
+//         agent: {
+//           small: string;
+//         };
+//       };
+//       damage_made: number;
+//       damage_received: number;
+//       character: string;
+//       team: string;
+//     };
+//   };
+//   teams: {
+//     blue: {
+//       has_won: boolean;
+//       rounds_won: number;
+//       rounds_lost: number;
+//     };
+//     red: {
+//       rounds_won: number;
+//       rounds_lost: number;
+//     };
+//   };
+//   rounds: {
+//     length: number;
+//   };
+//   metadata: {
+//     map: string;
+//     mode: string;
+//   };
+// }
+
+interface PlayerMatchData {
+  all_players: [PlayerData];
+  blue: [PlayerData];
+  red: [PlayerData];
+}
+
+interface PlayerData {
+  name: string;
+  stats: {
+    kills: number;
+    deaths: number;
+    assists: number;
+    score: number;
+    headshots: number;
+    bodyshots: number;
+    legshots: number;
+  };
+  assets: {
+    agent: {
+      small: string;
+    };
+  };
+  damage_made: number;
+  damage_received: number;
+  character: string;
+  team: string;
+}
+
+interface PlayerInterface {
+  name: string;
+  damage_made: number;
+  damage_received: number;
+  stats: {
+    kills: number;
+    deaths: number;
+    assists: number;
+    headshots: number;
+    bodyshots: number;
+    legshots: number;
+    score: number;
+  };
+}
+
+interface PlayerMatchSummaryProps {
+  data: PlayerMatchData;
+  index: number;
+}
+
+function formatPlayerData(data: PlayerMatchData | null, rounds: number) {
   const playerData: Player[] = [];
   //console.log(data);
-  const bluePlayers = data.blue.map((player) => ({
+  if (data === null) {
+    return [];
+  } else {
+    console.log(data);
+  }
+  const bluePlayers = data.blue.map((player: PlayerInterface) => ({
     name: player.name,
     acs: (player.stats.score / rounds).toFixed(0),
     kills: player.stats.kills,
@@ -59,7 +155,7 @@ function formatPlayerData(data, rounds: number) {
     // fd: player.stats.fd,
   }));
 
-  const redPlayers = data.red.map((player) => ({
+  const redPlayers = data.red.map((player: PlayerInterface) => ({
     name: player.name,
     acs: (player.stats.score / rounds).toFixed(0),
     kills: player.stats.kills,
@@ -132,7 +228,7 @@ const columns = [
   // }),
 ];
 
-const PlayerMatchSummary = (props) => {
+const PlayerMatchSummary = (props: PlayerMatchSummaryProps) => {
   console.log(props);
   // const backgroundColor = props.matchResult
   //   ? "border-green-500"

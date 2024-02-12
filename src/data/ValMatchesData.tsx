@@ -144,6 +144,7 @@ const ValMatchesData = (
       });
       // console.log(response.data);
       //formatMatchData(response.data, userName, tag);
+      console.log(response.data);
       return formatMatchData(response.data as [MatchData], userName, tag);
     } catch (error) {
       console.error("Error fetching Valorant API:", error);
