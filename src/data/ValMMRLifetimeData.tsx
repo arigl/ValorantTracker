@@ -1,18 +1,46 @@
-import HenrikDevValorantAPI from "unofficial-valorant-api";
+import HenrikDevValorantAPI, {
+  Regions,
+  MMRVersions,
+} from "unofficial-valorant-api";
 
-const formatData = (data) => ({
-  //   puuid: data.puuid,
-  //   region: data.region,
-  //   accountLevel: data.account_level,
-  //   name: data.name,
-  //   tag: data.tag,
-  //   smallAvatar: data.card.small,
-  rankText: data.currenttierpatched,
-  rankImage: data.images.small,
-  prevRankChange: data.mmr_change_to_last_game,
-});
+interface ValorantMMRData {
+  currenttierpatched: number;
+  mmr_change_to_last_game: number;
+  patched_tier: number;
+  current_data: {
+    images: {
+      small: string;
+    };
+  };
+  // images: {
+  //   small: string;
+  // };
+  highest_rank: {
+    patched_tier: number;
+    season: string;
+  };
+}
 
-const ValMMRLifetimeData = ({ version, region, userName, tag }) => {
+const formatData = (data: ValorantMMRData | null) => {
+  if (data === null) {
+    return null; // Return null if data is null
+  }
+
+  return {
+    rankText: String(data.currenttierpatched),
+    rankImage: data.current_data.images.small,
+    prevRankChange: data.mmr_change_to_last_game,
+    patched_tier: data.highest_rank.patched_tier,
+    season: data.highest_rank.season,
+  };
+};
+
+const ValMMRLifetimeData = (
+  version: MMRVersions,
+  region: Regions,
+  userName: string,
+  tag: string
+) => {
   const VAPI = new HenrikDevValorantAPI();
 
   const fetchData = async () => {
@@ -23,10 +51,15 @@ const ValMMRLifetimeData = ({ version, region, userName, tag }) => {
         name: userName,
         tag: tag,
       });
+
+      if (response.data === null) {
+        return null;
+      }
+
       console.log("Lifetime mmr");
       console.log(response.data);
       //return formatData(response.data[0]);
-      return response.data;
+      return formatData(response.data as ValorantMMRData);
     } catch (error) {
       console.error("Error fetching Valorant API:", error);
       return null;

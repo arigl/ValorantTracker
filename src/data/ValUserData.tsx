@@ -1,16 +1,32 @@
-import { useEffect } from "react";
 import HenrikDevValorantAPI from "unofficial-valorant-api";
 
-const formatData = (data) => ({
-  puuid: data.puuid,
-  region: data.region,
-  accountLevel: data.account_level,
-  name: data.name,
-  tag: data.tag,
-  smallAvatar: data.card.small,
-});
+interface ValorantData {
+  puuid: string;
+  region: string;
+  account_level: number;
+  name: string;
+  tag: string;
+  card: {
+    small: string;
+  };
+}
 
-const ValUserData = ({ userName, tag }) => {
+const formatData = (data: ValorantData | null) => {
+  if (data === null) {
+    return null; // Return null if data is null
+  }
+
+  return {
+    puuid: data.puuid,
+    region: data.region,
+    accountLevel: data.account_level,
+    name: data.name,
+    tag: data.tag,
+    smallAvatar: data.card?.small, // Added optional chaining for 'card'
+  };
+};
+
+const ValUserData = (userName: string, tag: string) => {
   const VAPI = new HenrikDevValorantAPI();
 
   const fetchData = async () => {
@@ -20,7 +36,7 @@ const ValUserData = ({ userName, tag }) => {
         tag: tag,
       });
       //console.log(response.data);
-      return formatData(response.data);
+      return formatData(response.data as ValorantData);
     } catch (error) {
       console.error("Error fetching Valorant API:", error);
       return null;

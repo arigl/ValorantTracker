@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 
 import "../styles.css";
@@ -102,17 +102,15 @@ const UserRankInfo = (props: { mmrData: any; mmrLifeData: any }) => {
           {props.mmrLifeData && (
             <div className="flex flex-row gap-2">
               <img
-                src={getRankImage(props.mmrLifeData.highest_rank.patched_tier)}
+                src={getRankImage(props.mmrLifeData.patched_tier)}
                 width={40}
                 height={40} // Set height to maintain 1x1 aspect ratio
                 style={{ objectFit: "contain" }} // Use object-fit to prevent stretching
               ></img>
               <div className="flex flex-col">
                 <h2 className="text-sm">Peak Rank:</h2>
-                <h1>{props.mmrLifeData.highest_rank.patched_tier}</h1>
-                <h1>
-                  {formatRankSeason(props.mmrLifeData.highest_rank.season)}
-                </h1>
+                <h1>{props.mmrLifeData.patched_tier}</h1>
+                <h1>{formatRankSeason(props.mmrLifeData.season)}</h1>
               </div>
             </div>
           )}

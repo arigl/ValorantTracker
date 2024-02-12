@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 
 import "../styles.css";
 
-function getTotalShots(data) {
+function getTotalShots(data: string | any[]) {
   let headshots = 0;
   let bodyshots = 0;
   let legshots = 0;
@@ -16,7 +15,7 @@ function getTotalShots(data) {
 
   return { headshots, bodyshots, legshots };
 }
-const ShotGraph = (props: { matchData }) => {
+const ShotGraph = (props: { matchData: string | any[] }) => {
   console.log(props.matchData);
   const shotArray = getTotalShots(props.matchData);
   return (

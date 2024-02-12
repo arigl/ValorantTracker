@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 const ValLeaderboardData = ({}) => {
   const url = "https://api.henrikdev.xyz/valorant/v1/leaderboard/na";
@@ -38,8 +38,9 @@ const ValLeaderboardData = ({}) => {
           return response;
           // Process response here.
         })
-        .catch((error) => {
+        .catch((error: string) => {
           // Handle errors here.
+          console.log(error);
           return null;
         });
     } catch (error) {

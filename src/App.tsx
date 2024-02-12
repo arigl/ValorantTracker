@@ -12,11 +12,12 @@ import OverviewStats from "./components/OverviewStats";
 import ModeSelect from "./components/ModeSelect";
 import LoginScreen from "./components/LoginScreen";
 import LoadingScreen from "./components/LoadingScreen";
-import ValLeaderboardData from "./data/ValLeaderboardData";
+// import ValLeaderboardData from "./data/ValLeaderboardData";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ModeToggle } from "./components/ModeToggle";
 import { Separator } from "@/components/ui/separator";
 import ShotGraph from "./components/ShotGraph";
+// import HenrikDevValorantAPI, { Modes, Regions } from "unofficial-valorant-api";
 
 interface UserData {
   puuid: string;
@@ -27,17 +28,76 @@ interface UserData {
   smallAvatar: string;
 }
 
+interface MMRData {
+  rankText: string;
+  rankImage: string;
+  prevRankChange: number;
+}
+
+interface MMRLifeData {
+  rankText: string;
+  rankImage: string;
+  prevRankChange: number;
+  patched_tier: number;
+  season: string;
+}
+
+interface MatchData {
+  players: {
+    all_players: {
+      stats: {
+        kills: number;
+        deaths: number;
+        assists: number;
+        score: number;
+        headshots: number;
+        bodyshots: number;
+        legshots: number;
+      };
+      assets: {
+        agent: {
+          small: string;
+        };
+      };
+      damage_made: number;
+      damage_received: number;
+      character: string;
+      team: string;
+    };
+  };
+  teams: {
+    blue: {
+      has_won: boolean;
+      rounds_won: number;
+      rounds_lost: number;
+    };
+    red: {
+      rounds_won: number;
+      rounds_lost: number;
+    };
+  };
+  rounds: {
+    length: number;
+  };
+  metadata: {
+    map: string;
+    mode: string;
+  };
+}
+
 function App() {
   const [fetchedUserData, setFetchedUserData] = useState<UserData | null>(null);
-  const [fetchedMMRData, setFetchedMMRData] = useState(null);
-  const [fetchedLifetimeMMRData, setFetchedLifetimeMMRData] = useState(null);
+  const [fetchedMMRData, setFetchedMMRData] = useState<MMRData | null>(null);
+  const [fetchedLifetimeMMRData, setFetchedLifetimeMMRData] =
+    useState<MMRLifeData | null>(null);
   const [fetchedUnratedMatchesData, setFetchedUnratedMatchesData] =
-    useState(null);
+    useState<MatchData | null>(null);
   const [fetchedCompetitiveMatchesData, setFetchedCompetitiveMatchesData] =
-    useState(null);
+    useState<MatchData | null>(null);
 
-  const [fetchedLeaderboardData, setFetchedLeaderboardData] = useState(null);
-  const [fetchedMatchesData, setFetchedMatchesData] = useState(null);
+  //const [fetchedLeaderboardData, setFetchedLeaderboardData] = useState(null);
+  const [fetchedMatchesData, setFetchedMatchesData] =
+    useState<MatchData | null>(null);
   const [modeSelected, selectMode] = useState<string>("competitive");
   const [currentUser, setCurrentUser] = useState("");
   const [loading, toggleLoading] = useState(true);
@@ -102,52 +162,39 @@ function App() {
       console.log("No '#' found in the string.");
     }
 
-    const fetchUserData = ValUserData({ userName: user, tag: tag });
+    const fetchUserData = ValUserData(user, tag);
     const userData: UserData | null = await fetchUserData();
     setFetchedUserData(userData);
     setLoadingProgress(20);
 
-    const fetchMMRData = ValMMRData({
-      region: "NA",
-      userName: user,
-      tag: tag,
-    });
-    const mmrData = await fetchMMRData();
+    const fetchMMRData = ValMMRData("na", user, tag);
+    const mmrData: MMRData | null = await fetchMMRData();
     setFetchedMMRData(mmrData);
     setLoadingProgress(40);
 
-    const fetchLifeMMRData = ValMMRLifetimeData({
-      version: "v2",
-      region: "NA",
-      userName: user,
-      tag: tag,
-    });
-    const mmrLifeData = await fetchLifeMMRData();
+    const fetchLifeMMRData = ValMMRLifetimeData("v2", "na", user, tag);
+    const mmrLifeData: MMRLifeData | null = await fetchLifeMMRData();
     setFetchedLifetimeMMRData(mmrLifeData);
     setLoadingProgress(60);
 
-    const fetchCompetitiveMatchesData = ValMatchesData({
-      region: "NA",
-      userName: user,
-      tag: tag,
-      modeFilter: "competitive",
-    });
-    const competitiveData = await fetchCompetitiveMatchesData();
+    const fetchCompetitiveMatchesData = ValMatchesData(
+      "na",
+      user,
+      tag,
+      "competitive"
+    );
+    const competitiveData: MatchData | null =
+      await fetchCompetitiveMatchesData();
     setFetchedCompetitiveMatchesData(competitiveData);
     setFetchedMatchesData(competitiveData);
     setLoadingProgress(80);
 
-    const fetchLeaderBoardData = ValLeaderboardData({});
-    const leaderboardData = await fetchLeaderBoardData();
-    setFetchedLeaderboardData(leaderboardData);
-    setLoadingProgress(90);
+    // const fetchLeaderBoardData = ValLeaderboardData({});
+    // const leaderboardData = await fetchLeaderBoardData();
+    // setFetchedLeaderboardData(leaderboardData);
+    // setLoadingProgress(90);
 
-    const fetchUnratedMatchesData = ValMatchesData({
-      region: "NA",
-      userName: user,
-      tag: tag,
-      modeFilter: "unrated",
-    });
+    const fetchUnratedMatchesData = ValMatchesData("na", user, tag, "unrated");
     const unratedData = await fetchUnratedMatchesData();
     setFetchedUnratedMatchesData(unratedData);
     setLoadingProgress(100);
