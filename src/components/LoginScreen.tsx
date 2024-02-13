@@ -42,22 +42,22 @@ const LoginScreen = (props: {
     props.setUsername(usernameForm);
   };
 
-  const handleStoredUsernameSelect = (selectedUsername: string) => {
-    // Handle the selected stored username as if it were submitted through the form
-    setUsernameForm(selectedUsername);
-    // Trigger form submission
-    // const updatedUsernames = [selectedUsername, ...storedUsernames].slice(
-    //   0,
-    //   MAX_HISTORY_LENGTH
-    // );
-    // localStorage.setItem("usernames", JSON.stringify(updatedUsernames));
+  // const handleStoredUsernameSelect = (selectedUsername: string) => {
+  //   // Handle the selected stored username as if it were submitted through the form
+  //   setUsernameForm(selectedUsername);
+  //   // Trigger form submission
+  //   // const updatedUsernames = [selectedUsername, ...storedUsernames].slice(
+  //   //   0,
+  //   //   MAX_HISTORY_LENGTH
+  //   // );
+  //   // localStorage.setItem("usernames", JSON.stringify(updatedUsernames));
 
-    // // Update state with the new username
-    // setStoredUsernames(updatedUsernames);
+  //   // // Update state with the new username
+  //   // setStoredUsernames(updatedUsernames);
 
-    // Set the username using props
-    props.setUsername(selectedUsername);
-  };
+  //   // Set the username using props
+  //   props.setUsername(selectedUsername);
+  // };
 
   return (
     <div className="flex flex-col min-h-screen">
