@@ -80,6 +80,16 @@ type Player = {
 //   };
 // }
 
+interface PlayerMatchInterface {
+  players: {
+    all_players: [PlayerData];
+    blue: [PlayerData];
+    red: [PlayerData];
+  };
+  metadata: {
+    rounds_played: number;
+  };
+}
 interface PlayerMatchData {
   all_players: [PlayerData];
   blue: [PlayerData];
@@ -124,7 +134,7 @@ interface PlayerInterface {
 }
 
 interface PlayerMatchSummaryProps {
-  data: PlayerMatchData;
+  data: PlayerMatchInterface;
   index: number;
 }
 
@@ -234,10 +244,7 @@ const PlayerMatchSummary = (props: PlayerMatchSummaryProps) => {
   //   ? "border-green-500"
   //   : "border-red-500";
   const [data, setData] = React.useState(() => [
-    ...formatPlayerData(
-      props.data[props.index].players,
-      props.data[props.index].metadata.rounds_played
-    ),
+    ...formatPlayerData(props.data.players, props.data.metadata.rounds_played),
   ]);
   const rerender = React.useReducer(() => ({}), {})[1];
 

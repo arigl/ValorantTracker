@@ -12,6 +12,28 @@ import {
 import { Button } from "@/components/ui/button";
 import PlayerMatchSummary from "./PlayerMatchSummary";
 
+interface PlayerData {
+  name: string;
+  stats: {
+    kills: number;
+    deaths: number;
+    assists: number;
+    score: number;
+    headshots: number;
+    bodyshots: number;
+    legshots: number;
+  };
+  assets: {
+    agent: {
+      small: string;
+    };
+  };
+  damage_made: number;
+  damage_received: number;
+  character: string;
+  team: string;
+}
+
 interface MatchSummaryProps {
   matchResult: boolean;
   agentIcon: string;
@@ -28,7 +50,7 @@ interface MatchSummaryProps {
   adr: number;
   score: number;
   rounds: number;
-  data: MatchData;
+  data: PlayerMatchInterface;
   index: number;
 }
 
@@ -73,6 +95,44 @@ interface MatchData {
     map: string;
     mode: string;
   };
+}
+
+interface PlayerMatchInterface {
+  players: {
+    all_players: [PlayerData];
+    blue: [PlayerData];
+    red: [PlayerData];
+  };
+  metadata: {
+    rounds_played: number;
+  };
+}
+interface PlayerMatchData {
+  all_players: [PlayerData];
+  blue: [PlayerData];
+  red: [PlayerData];
+}
+
+interface PlayerData {
+  name: string;
+  stats: {
+    kills: number;
+    deaths: number;
+    assists: number;
+    score: number;
+    headshots: number;
+    bodyshots: number;
+    legshots: number;
+  };
+  assets: {
+    agent: {
+      small: string;
+    };
+  };
+  damage_made: number;
+  damage_received: number;
+  character: string;
+  team: string;
 }
 
 const MatchSummary = (props: MatchSummaryProps) => {

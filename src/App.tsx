@@ -61,6 +61,48 @@ interface MatchData {
   mode: string;
   roundWins: number;
   roundLosses: number;
+  matchData: MatchDataInterface;
+}
+
+interface MatchDataInterface {
+  players: {
+    all_players: {
+      stats: {
+        kills: number;
+        deaths: number;
+        assists: number;
+        score: number;
+        headshots: number;
+        bodyshots: number;
+        legshots: number;
+      };
+      assets: {
+        agent: {
+          small: string;
+        };
+      };
+      damage_made: number;
+      damage_received: number;
+      character: string;
+      team: string;
+    };
+  };
+  teams: {
+    blue: {
+      has_won: boolean;
+      rounds_won: number;
+      rounds_lost: number;
+    };
+    red: {
+      rounds_won: number;
+      rounds_lost: number;
+    };
+  };
+  rounds: number;
+  metadata: {
+    map: string;
+    mode: string;
+  };
 }
 
 function App() {
@@ -173,7 +215,7 @@ function App() {
     // setLoadingProgress(90);
 
     const fetchUnratedMatchesData = ValMatchesData("na", user, tag, "unrated");
-    const unratedData = await fetchUnratedMatchesData();
+    const unratedData: MatchData | null = await fetchUnratedMatchesData();
     setFetchedUnratedMatchesData(unratedData);
     setLoadingProgress(100);
 

@@ -59,7 +59,10 @@ function formatMatchData(
   if (data === null) {
     return null;
   }
+  console.log(data);
+  let count = 0;
   const recentMatches = data.map((match) => {
+    count++;
     const rounds = match.rounds.length;
     let hasWon = "Blue";
     if (match.teams.blue.has_won == false) {
@@ -117,7 +120,7 @@ function formatMatchData(
       mode: mode,
       roundWins: roundWins,
       roundLosses: roundLosses,
-      matchData: data,
+      matchData: data[count - 1],
       // rounds: myPlayer.rounds.length,
     };
     //console.log(myPlayer);
