@@ -125,6 +125,8 @@ function formatMatchData(
     };
     //console.log(myPlayer);
   });
+  console.log("recent matches");
+  console.log(recentMatches);
   return recentMatches;
 }
 //{ region, userName, tag, modeFilter }

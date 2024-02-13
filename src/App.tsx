@@ -61,63 +61,65 @@ interface MatchData {
   mode: string;
   roundWins: number;
   roundLosses: number;
-  matchData: MatchDataInterface;
+  matchData: any;
 }
 
-interface MatchDataInterface {
-  players: {
-    all_players: {
-      stats: {
-        kills: number;
-        deaths: number;
-        assists: number;
-        score: number;
-        headshots: number;
-        bodyshots: number;
-        legshots: number;
-      };
-      assets: {
-        agent: {
-          small: string;
-        };
-      };
-      damage_made: number;
-      damage_received: number;
-      character: string;
-      team: string;
-    };
-  };
-  teams: {
-    blue: {
-      has_won: boolean;
-      rounds_won: number;
-      rounds_lost: number;
-    };
-    red: {
-      rounds_won: number;
-      rounds_lost: number;
-    };
-  };
-  rounds: number;
-  metadata: {
-    map: string;
-    mode: string;
-  };
-}
+// interface MatchDataInterface {
+//   players: {
+//     all_players: {
+//       stats: {
+//         kills: number;
+//         deaths: number;
+//         assists: number;
+//         score: number;
+//         headshots: number;
+//         bodyshots: number;
+//         legshots: number;
+//       };
+//       assets: {
+//         agent: {
+//           small: string;
+//         };
+//       };
+//       damage_made: number;
+//       damage_received: number;
+//       character: string;
+//       team: string;
+//     };
+//   };
+//   teams: {
+//     blue: {
+//       has_won: boolean;
+//       rounds_won: number;
+//       rounds_lost: number;
+//     };
+//     red: {
+//       rounds_won: number;
+//       rounds_lost: number;
+//     };
+//   };
+//   rounds: number;
+//   metadata: {
+//     map: string;
+//     mode: string;
+//   };
+// }
 
 function App() {
   const [fetchedUserData, setFetchedUserData] = useState<UserData | null>(null);
   const [fetchedMMRData, setFetchedMMRData] = useState<MMRData | null>(null);
   const [fetchedLifetimeMMRData, setFetchedLifetimeMMRData] =
     useState<MMRLifeData | null>(null);
-  const [fetchedUnratedMatchesData, setFetchedUnratedMatchesData] =
-    useState<MatchData | null>(null);
+  const [fetchedUnratedMatchesData, setFetchedUnratedMatchesData] = useState<
+    MatchData[] | null
+  >(null);
   const [fetchedCompetitiveMatchesData, setFetchedCompetitiveMatchesData] =
-    useState<MatchData | null>(null);
+    useState<MatchData[] | null>(null);
 
   //const [fetchedLeaderboardData, setFetchedLeaderboardData] = useState(null);
-  const [fetchedMatchesData, setFetchedMatchesData] =
-    useState<MatchData | null>(null);
+  const [fetchedMatchesData, setFetchedMatchesData] = useState<
+    MatchData[] | null
+  >(null);
   const [modeSelected, selectMode] = useState<string>("competitive");
   const [currentUser, setCurrentUser] = useState("");
   const [loading, toggleLoading] = useState(true);
@@ -133,7 +135,7 @@ function App() {
       } else if (modeSelected === "unrated") {
         console.log("unrated");
         console.log(fetchedUnratedMatchesData);
-        setFetchedMatchesData(fetchedUnratedMatchesData);
+        // setFetchedMatchesData(fetchedUnratedMatchesData);
       }
     }
     return () => {
@@ -203,7 +205,7 @@ function App() {
       tag,
       "competitive"
     );
-    const competitiveData: MatchData | null =
+    const competitiveData: MatchData[] | null =
       await fetchCompetitiveMatchesData();
     setFetchedCompetitiveMatchesData(competitiveData);
     setFetchedMatchesData(competitiveData);
@@ -215,7 +217,7 @@ function App() {
     // setLoadingProgress(90);
 
     const fetchUnratedMatchesData = ValMatchesData("na", user, tag, "unrated");
-    const unratedData: MatchData | null = await fetchUnratedMatchesData();
+    const unratedData: MatchData[] | null = await fetchUnratedMatchesData();
     setFetchedUnratedMatchesData(unratedData);
     setLoadingProgress(100);
 
