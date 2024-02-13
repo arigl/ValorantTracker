@@ -54,48 +54,48 @@ interface MatchSummaryProps {
   index: number;
 }
 
-interface MatchData {
-  players: {
-    all_players: {
-      stats: {
-        kills: number;
-        deaths: number;
-        assists: number;
-        score: number;
-        headshots: number;
-        bodyshots: number;
-        legshots: number;
-      };
-      assets: {
-        agent: {
-          small: string;
-        };
-      };
-      damage_made: number;
-      damage_received: number;
-      character: string;
-      team: string;
-    };
-  };
-  teams: {
-    blue: {
-      has_won: boolean;
-      rounds_won: number;
-      rounds_lost: number;
-    };
-    red: {
-      rounds_won: number;
-      rounds_lost: number;
-    };
-  };
-  rounds: {
-    length: number;
-  };
-  metadata: {
-    map: string;
-    mode: string;
-  };
-}
+// interface MatchData {
+//   players: {
+//     all_players: {
+//       stats: {
+//         kills: number;
+//         deaths: number;
+//         assists: number;
+//         score: number;
+//         headshots: number;
+//         bodyshots: number;
+//         legshots: number;
+//       };
+//       assets: {
+//         agent: {
+//           small: string;
+//         };
+//       };
+//       damage_made: number;
+//       damage_received: number;
+//       character: string;
+//       team: string;
+//     };
+//   };
+//   teams: {
+//     blue: {
+//       has_won: boolean;
+//       rounds_won: number;
+//       rounds_lost: number;
+//     };
+//     red: {
+//       rounds_won: number;
+//       rounds_lost: number;
+//     };
+//   };
+//   rounds: {
+//     length: number;
+//   };
+//   metadata: {
+//     map: string;
+//     mode: string;
+//   };
+// }
 
 interface PlayerMatchInterface {
   players: {
@@ -107,11 +107,11 @@ interface PlayerMatchInterface {
     rounds_played: number;
   };
 }
-interface PlayerMatchData {
-  all_players: [PlayerData];
-  blue: [PlayerData];
-  red: [PlayerData];
-}
+// interface PlayerMatchData {
+//   all_players: [PlayerData];
+//   blue: [PlayerData];
+//   red: [PlayerData];
+// }
 
 interface PlayerData {
   name: string;

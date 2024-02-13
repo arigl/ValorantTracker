@@ -243,10 +243,13 @@ const PlayerMatchSummary = (props: PlayerMatchSummaryProps) => {
   // const backgroundColor = props.matchResult
   //   ? "border-green-500"
   //   : "border-red-500";
-  const [data, setData] = React.useState(() => [
+  // const [data, setData] = React.useState(() => [
+  //   ...formatPlayerData(props.data.players, props.data.metadata.rounds_played),
+  // ]);
+  const [data] = React.useState(() => [
     ...formatPlayerData(props.data.players, props.data.metadata.rounds_played),
   ]);
-  const rerender = React.useReducer(() => ({}), {})[1];
+  // const rerender = React.useReducer(() => ({}), {})[1];
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
