@@ -135,7 +135,7 @@ function App() {
       } else if (modeSelected === "unrated") {
         console.log("unrated");
         console.log(fetchedUnratedMatchesData);
-        // setFetchedMatchesData(fetchedUnratedMatchesData);
+        setFetchedMatchesData(fetchedUnratedMatchesData);
       }
     }
     return () => {
