@@ -10,6 +10,7 @@ const LoginScreen = (props: {
 }) => {
   const [usernameForm, setUsernameForm] = useState("");
   const [storedUsernames, setStoredUsernames] = useState<string[]>([]);
+  const [showDropdown, setShowDropDown] = useState(false);
   const MAX_HISTORY_LENGTH = 10;
 
   useEffect(() => {
@@ -42,22 +43,36 @@ const LoginScreen = (props: {
     props.setUsername(usernameForm);
   };
 
-  // const handleStoredUsernameSelect = (selectedUsername: string) => {
-  //   // Handle the selected stored username as if it were submitted through the form
-  //   setUsernameForm(selectedUsername);
-  //   // Trigger form submission
-  //   // const updatedUsernames = [selectedUsername, ...storedUsernames].slice(
-  //   //   0,
-  //   //   MAX_HISTORY_LENGTH
-  //   // );
-  //   // localStorage.setItem("usernames", JSON.stringify(updatedUsernames));
+  const handleUsernameSelect = (selectedUsername: string) => {
+    // Handle the selected stored username as if it were submitted through the form
+    setUsernameForm(selectedUsername);
 
-  //   // // Update state with the new username
-  //   // setStoredUsernames(updatedUsernames);
+    const updatedUsernames = [selectedUsername, ...storedUsernames].slice(
+      0,
+      MAX_HISTORY_LENGTH
+    );
+    localStorage.setItem("usernames", JSON.stringify(updatedUsernames));
 
-  //   // Set the username using props
-  //   props.setUsername(selectedUsername);
-  // };
+    // Update state with the new username
+    setStoredUsernames(updatedUsernames);
+
+    // Set the username using props
+    props.setUsername(selectedUsername);
+  };
+
+  const handleInputFocus = () => {
+    console.log("focused");
+    console.log(showDropdown);
+    setShowDropDown(true);
+  };
+
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      console.log("Input field lost focus");
+      setShowDropDown(false);
+      // Call any method you want here
+    }, 100); // Adjust the delay as needed
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -80,8 +95,7 @@ const LoginScreen = (props: {
         </div> */}
         <div className="w-screen flex flex-col">
           <div className="w-screen flex flex-row items-center">
-            <div className="flex flex-col w-1/2 h-1/2 m-5 p-5 text-left items-center gap-8">
-              {/* <h1> Login</h1> */}
+            <div className="flex flex-col w-1/2 h-1/2 m-5 p-5 text-left items-center">
               <form
                 onSubmit={handleFormSubmit}
                 className="w-full flex flex-row"
@@ -91,34 +105,65 @@ const LoginScreen = (props: {
                   placeholder="Find a Player, i.e. Player#NA1"
                   value={usernameForm}
                   onChange={handleUsernameChange}
+                  onFocus={handleInputFocus}
+                  onBlur={handleInputBlur}
                   className="p-3 m-2 border border-gray-300 rounded-md text-black w-full"
                 />
-                <button
-                  type="submit"
-                  className="p-2 mt-2 mb-2 border rounded-md hover:bg-red-400"
-                >
-                  Submit
-                </button>
               </form>
-              {/* <Separator className="flex justify-center items-center"></Separator> */}
-              {/* <div className="mt-2">
-              <h1 className="mb-3">Search History:</h1>
-              {storedUsernames.slice(0, 1).map((storedUsername, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleStoredUsernameSelect(storedUsername)}
-                  className="border rounded mb-5 p-3 hover:bg-red-400"
-                >
-                  {storedUsername}
+              {showDropdown && (
+                <div className="dropdown-menu fixed bg-header mt-16 pl-5 pr-5 z-20 left-10 w-1/2 rounded flex flex-col">
+                  <div className="flex flex-row justify-between">
+                    <div className="flex flex-row mb-3 gap-5 items-center">
+                      <button className="bg-red-500 p-3 pl-8 pr-8 rounded border">
+                        Search
+                      </button>
+                      <Separator className="w-1 bg-primary" />
+                      <button className="p-3 pl-8 pr-8 rounded border hover:bg-red-500">
+                        History
+                      </button>
+                      <button className="bg-header p-3 pl-8 pr-8 rounded border hover:bg-red-500">
+                        Favorites
+                      </button>
+                    </div>
+                    <button className="bg-red-500 p-3 rounded m-3">
+                      Reset
+                    </button>
+                  </div>
+
+                  <Separator />
+                  {usernameForm.length == 0 &&
+                    storedUsernames.map((storedUsername, index) => (
+                      <div
+                        key={index}
+                        onClick={async () => {
+                          setUsernameForm(storedUsername);
+                          setShowDropDown(false);
+                          handleUsernameSelect(storedUsername);
+                          console.log(storedUsername); // Ensure console log is displayed
+                        }}
+                        className="dropdown-item p-3 rounded hover:bg-red-500"
+                      >
+                        {storedUsername}
+                      </div>
+                    ))}
+                  <div
+                    className="p-3 hover:bg-red-500"
+                    onClick={async () => {
+                      setShowDropDown(false);
+                      handleUsernameSelect(usernameForm);
+                      console.log(usernameForm); // Ensure console log is displayed
+                    }}
+                  >
+                    {usernameForm}
+                  </div>
                 </div>
-              ))}
-            </div> */}
-              <div className="flex flex-row items-center gap-5 justify-center">
+              )}
+              <div className="flex flex-row items-center gap-5 justify-center mt-5">
                 <Separator className="bg-white opacity-20" />
                 <h1 className="opacity-50">or</h1>
                 <Separator className="bg-white opacity-20" />
               </div>
-              <button className="bg-red-500 p-3 w-full mb-5 rounded ml-5 hover:bg-red-700">
+              <button className="bg-red-500 p-3 w-full mb-5 mt-5 rounded ml-5 hover:bg-red-700">
                 Sign in with Riot Account
               </button>
             </div>

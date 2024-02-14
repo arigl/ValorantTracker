@@ -240,7 +240,7 @@ function App() {
           />
         )}
         {currentUser != "" && loading && (
-          <LoadingScreen bgcolor={"#6a1b9a"} completed={loadingProgress} />
+          <LoadingScreen bgcolor={"#DC071B"} completed={loadingProgress} />
         )}
         {currentUser != "" &&
           fetchedUserData &&
